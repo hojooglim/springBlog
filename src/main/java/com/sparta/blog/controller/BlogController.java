@@ -14,28 +14,26 @@ public class BlogController {
         this.blogService = blogService;
     }
 
-    @GetMapping("/blog")
-    public List<ResponseDto> getBlog(){
-        return blogService.getBlog();
+    @GetMapping("/blogs")
+    public List<ResponseDto> getBlogs(){
+        return blogService.getBlogs();
     }
 
-    @GetMapping("/blog/{id}")
+    @GetMapping("/blogs/{id}")
     public ResponseDto getBlog(@PathVariable Long id){
         return blogService.getBlog(id);
     }
-    @PostMapping("/blog")
+    @PostMapping("/blogs")
     public ResponseDto createBlog(@ModelAttribute RequestDto requestDto){
         return blogService.createBlog(requestDto);
     }
-    @PutMapping("/blog/{id}")
-    public ResponseDto updateBlog(@PathVariable Long id, RequestDto requestDto){
+    @PutMapping("/blogs/{id}")
+    public ResponseDto updateBlog(@PathVariable Long id,@ModelAttribute RequestDto requestDto){
         return blogService.updateBlog(id,requestDto);
     }
-    @DeleteMapping("/blog/{id}")
+    @DeleteMapping("/blogs/{id}")
     @ResponseBody
-    public String deleteBlog(@PathVariable Long id,@RequestParam String password){
-        //비번도 보내야되는데...
-        //성공했다는 표시 반환...
-        return blogService.deleteBlog(id,password);
+    public String deleteBlog(@PathVariable Long id,@ModelAttribute RequestDto requestDto){
+        return blogService.deleteBlog(id,requestDto);
     }
 }

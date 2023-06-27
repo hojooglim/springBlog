@@ -15,18 +15,18 @@ public class BlogService {
     public BlogService(BlogRepository blogRepository){
         this.blogRepository=blogRepository;
     }
-    public List<ResponseDto> getBlog() {
+    public List<ResponseDto> getBlogs() {
         return blogRepository.findAllByOrderByModifiedAtDesc().stream().map(ResponseDto::new).toList();
     }
     public ResponseDto getBlog(Long id) {
         Blog blog = blogRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("글이 존재하지 않습니다."));
         return new ResponseDto(blog);
     }
-
+    @Transactional
     public ResponseDto createBlog(RequestDto requestDto) {
-        //dto -> entity
+        //dto->entity
         Blog blog = new Blog(requestDto);
-        //->repository
+        //entity->db
         blogRepository.save(blog);
         //entity->dto->controller
         return new ResponseDto(blog);
@@ -34,25 +34,24 @@ public class BlogService {
 
     @Transactional
     public ResponseDto updateBlog(Long id, RequestDto requestDto) {
-        //blog 확인
-        Blog blog = blogRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("글이 존재하지 않습니다."));
-        if(requestDto.getPassword().equals(blog.getPassword())){
-            blog.update(requestDto);
-        } else {
-            throw new IllegalArgumentException("비밀번호가 맞지 않습니다.");
-        }
-        return new ResponseDto(blog);
+        Blog updateBlog = checkBlogAndPassword(id,requestDto);
+        updateBlog.update(requestDto);
+        return new ResponseDto(updateBlog);
     }
 
+    @Transactional
+    public String deleteBlog(Long id, RequestDto requestDto) {
+        blogRepository.delete(checkBlogAndPassword(id,requestDto));
+        return "삭제 되었습니다.";
+    }
 
-    public String deleteBlog(Long id, String password) {
-        //blog 확인
+    public Blog checkBlogAndPassword(Long id, RequestDto requestDto){
+        //blog check
         Blog blog = blogRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("글이 존재하지 않습니다."));
-        if(blog.getPassword().equals(password)){
-            blogRepository.delete(blog);
-        } else {
+        //password check
+        if(!blog.getPassword().equals(requestDto.getPassword())){
             throw new IllegalArgumentException("비밀번호가 맞지 않습니다.");
         }
-        return "ture";
+        return blog;
     }
 }
