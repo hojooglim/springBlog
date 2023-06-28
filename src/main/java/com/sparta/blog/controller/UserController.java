@@ -1,0 +1,38 @@
+package com.sparta.blog.controller;
+
+import com.sparta.blog.dto.LoginRequestDto;
+import com.sparta.blog.dto.SignRequestDto;
+import com.sparta.blog.dto.SignResponseDto;
+import com.sparta.blog.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class UserController {
+    private UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @PostMapping("/signup")
+    public SignResponseDto signup(@ModelAttribute SignRequestDto signRequestDto){
+        return userService.signup(signRequestDto);
+    }
+
+    @PostMapping("/login")
+    public String login(@ModelAttribute LoginRequestDto loginRequestDto, HttpServletResponse res){
+        //로그인에 성공한다면 로그인 성공 메세지
+        //로그인 실패시, 실패 메세지
+        try {
+            userService.login(loginRequestDto,res);
+        } catch (Exception e) {
+            return "로그인에 실패하였습니다.";
+
+        }
+        return "로그인에 성공하였습니다.";
+
+    }
+}
