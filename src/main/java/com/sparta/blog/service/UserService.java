@@ -4,6 +4,7 @@ import com.sparta.blog.dto.LoginRequestDto;
 import com.sparta.blog.dto.SignRequestDto;
 import com.sparta.blog.dto.SignResponseDto;
 import com.sparta.blog.entity.User;
+import com.sparta.blog.entity.UserRoleEnum;
 import com.sparta.blog.jwt.JwtUtil;
 import com.sparta.blog.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
@@ -41,10 +42,13 @@ public class UserService {
         if (checkEmail.isPresent()) {
             throw new IllegalArgumentException("중복된 Email 입니다.");
         }
+
         //비밀번호 암호화 (string security)
         String password = passwordEncoder.encode(signRequestDto.getPassword());
 
-        User user = new User(signRequestDto.getUsername(), password, signRequestDto.getEmail());
+        UserRoleEnum role = UserRoleEnum.USER;
+
+        User user = new User(signRequestDto.getUsername(), password, signRequestDto.getEmail(),role);
         userRepository.save(user);
         return new SignResponseDto(user);
     }
@@ -60,7 +64,7 @@ public class UserService {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
         //토큰 생성
-        String token = jwtUtil.createToken(user.getUsername());
+        String token = jwtUtil.createToken(user.getUsername(),user.getRole());
         //토큰을 쿠키에 담아서, response로 보내준다
         jwtUtil.addJwtToCookie(token, res);
     }
