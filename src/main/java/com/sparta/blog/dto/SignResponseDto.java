@@ -5,11 +5,11 @@ import lombok.Getter;
 
 @Getter
 public class SignResponseDto {
-    private String username;
-    private String email;
+    private String msg;
+    private int statusCode;
 
-    public SignResponseDto(User user) {
-        this.username = user.getUsername();
-        this.email = user.getEmail();
+    public SignResponseDto(String msg, int statusCode) {
+        this.msg = msg;
+        this.statusCode = statusCode;
     }
 }

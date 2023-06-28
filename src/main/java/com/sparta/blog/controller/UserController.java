@@ -3,6 +3,7 @@ package com.sparta.blog.controller;
 import com.sparta.blog.dto.SignRequestDto;
 import com.sparta.blog.dto.SignResponseDto;
 import com.sparta.blog.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +19,9 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public SignResponseDto signup(@ModelAttribute SignRequestDto signRequestDto){
-        return userService.signup(signRequestDto);
+    public SignResponseDto signup(@ModelAttribute @Valid SignRequestDto signRequestDto){
+        userService.signup(signRequestDto);
+        return new SignResponseDto("SignUp Success",200);
     }
 
 //    @PostMapping("/login")
@@ -30,9 +32,9 @@ public class UserController {
 //            userService.login(loginRequestDto,res);
 //        } catch (Exception e) {
 //            return "로그인에 실패하였습니다.";
-//
 //        }
 //        return "로그인에 성공하였습니다.";
 //
 //    }
+
 }

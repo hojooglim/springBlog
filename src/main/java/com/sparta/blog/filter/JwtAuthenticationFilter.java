@@ -2,6 +2,7 @@ package com.sparta.blog.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.blog.dto.LoginRequestDto;
+import com.sparta.blog.dto.LoginResponseDto;
 import com.sparta.blog.entity.UserRoleEnum;
 import com.sparta.blog.jwt.JwtUtil;
 import com.sparta.blog.security.UserDetailsImpl;
@@ -63,12 +64,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         //쿠키에 넣어서 리스폰 객체에 넣어서 보내줌
 
         String token = jwtUtil.createToken(username,role);
-        jwtUtil.addJwtToCookie(token, response);
-//        response.addHeader(username,token);
-
-//        response.setStatus(200);
-        //class 새로 제작해서 변수 메세지랑 상태코드 dto 비스무리한거
-
+        LoginResponseDto loginRequestDto = jwtUtil.addJwtToCookie(token, response);
+        response.getOutputStream().println(loginRequestDto.getMsg());
+        response.getOutputStream().println("status Code : "+loginRequestDto.getStatusCode());
     }
 
     @Override

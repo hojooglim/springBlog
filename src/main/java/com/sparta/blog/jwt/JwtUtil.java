@@ -1,6 +1,8 @@
 package com.sparta.blog.jwt;
 
 
+import com.sparta.blog.dto.LoginResponseDto;
+import com.sparta.blog.dto.SignResponseDto;
 import com.sparta.blog.entity.UserRoleEnum;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -65,7 +67,7 @@ public class JwtUtil {
     //즉 token = 베어리스 + 유저 식별자 값  + 만료시간(현재시간+만료시간) + 발급일 + 키(시크릿키,암호화 알고리즘)
 
     // JWT Cookie 에 저장
-    public void addJwtToCookie(String token, HttpServletResponse res) {
+    public LoginResponseDto addJwtToCookie(String token, HttpServletResponse res) {
         try {
             token = URLEncoder.encode(token, "utf-8").replaceAll("\\+", "%20"); // Cookie Value 에는 공백이 불가능해서 encoding 진행
             //인코더를 사용해서 공백 제거
@@ -77,6 +79,7 @@ public class JwtUtil {
         } catch (UnsupportedEncodingException e) {
             logger.error(e.getMessage());
         }
+        return new LoginResponseDto("Login Success",200);
     }
 
     //JWT 토큰 substring

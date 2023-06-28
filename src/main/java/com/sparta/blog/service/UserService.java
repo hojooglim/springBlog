@@ -28,7 +28,7 @@ public class UserService {
 
 
 
-    public SignResponseDto signup(SignRequestDto signRequestDto){
+    public void signup(SignRequestDto signRequestDto){
         //회원가입 요청
         //id 중복 확인
         Optional<User> checkUserName = userRepository.findByUsername(signRequestDto.getUsername());
@@ -50,7 +50,6 @@ public class UserService {
 
         User user = new User(signRequestDto.getUsername(), password, signRequestDto.getEmail(),role);
         userRepository.save(user);
-        return new SignResponseDto(user);
     }
 
 
