@@ -1,4 +1,4 @@
-package com.sparta.blog.dto;
+package com.sparta.blog.dto.blog;
 
 
 import com.sparta.blog.entity.Blog;
@@ -7,14 +7,14 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-public class ResponseDto {
+public class BlogResponseDto {
     Long id;
     String postName;
     String userName;
     String contents;
     LocalDateTime createdAt;
 
-    public ResponseDto(Blog blog) {
+    public BlogResponseDto(Blog blog) {
         this.id = blog.getId();
         this.postName = blog.getPostName();
         this.userName = blog.getUserName();

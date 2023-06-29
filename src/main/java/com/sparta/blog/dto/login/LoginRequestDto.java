@@ -1,4 +1,4 @@
-package com.sparta.blog.dto;
+package com.sparta.blog.dto.login;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

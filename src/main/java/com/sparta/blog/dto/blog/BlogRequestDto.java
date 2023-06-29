@@ -1,4 +1,4 @@
-package com.sparta.blog.dto;
+package com.sparta.blog.dto.blog;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,11 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RequestDto {
+public class BlogRequestDto {
 
     String postName;
-    String userName;
     String contents;
-    String password;
+
 
 }

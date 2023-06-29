@@ -1,7 +1,6 @@
 package com.sparta.blog.filter;
 
 import com.sparta.blog.jwt.JwtUtil;
-import com.sparta.blog.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -20,7 +19,8 @@ import java.io.IOException;
 
 @Slf4j(topic = "JWT 검증")
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
-    //필터 상속 받으면 http서블릿 리퀘스트 쓸수 잇음.
+    //extends OncePerRequestFilter http서블릿 리퀘스트 쓸수 잇음?
+
     private final JwtUtil jwtUtil;
     private final UserDetailsServiceImpl userDetailsService;
 
@@ -31,17 +31,18 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain filterChain) throws ServletException, IOException {
-
-        String tokenValue = jwtUtil.getTokenFromRequest(req);
-        //클라이언트에게 받아온 토큰 꺼내와서
+        //클라이언트에게 받아온 토큰
+        //1)header name-value 일 경우 value만 꺼내서 bar부분 잘라주는 것 까지
+        String tokenValue = jwtUtil.getJwtFromHeader(req);
+        //2-1)쿠키로 받아올 경우 value만 가져옴
+        //String tokenValue = jwtUtil.getTokenFromRequest(req);
 
         if (StringUtils.hasText(tokenValue)) {
-            //토큰이 있으면
-            //JWT 토큰 substring
-            tokenValue = jwtUtil.substringToken(tokenValue);
-            log.info(tokenValue);
+//            //2-2)value JWT 토큰 substring
+//            tokenValue = jwtUtil.substringToken(tokenValue);
+             log.info(tokenValue);
 
-            //토큰 검증
+            //토큰 검증 (key)
             if (!jwtUtil.validateToken(tokenValue)) {
                 log.error("Token Error");
                 return;
@@ -52,6 +53,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
             try {
                 //인증처리 (유저 아이디 필요)
+                //잘모르겠음.
                 setAuthentication(info.getSubject());
             } catch (Exception e) {
                 log.error(e.getMessage());
@@ -65,9 +67,9 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     // 인증 처리
     public void setAuthentication(String username) {
-        //홀더에 authentication (토큰) 넣어줌
+        //2) 홀더에 authentication 넣어줌
         SecurityContext context = SecurityContextHolder.createEmptyContext();
-        //유저 네임을 통해 authentication (토큰) 만들고
+        //1) 클레입 타입의 유저 네임을 통해 authentication 인증 객체(정보가 들어있음 userdetail) 만들고
         Authentication authentication = createAuthentication(username);
         context.setAuthentication(authentication);
 

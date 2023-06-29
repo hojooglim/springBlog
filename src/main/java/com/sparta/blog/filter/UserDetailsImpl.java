@@ -1,4 +1,4 @@
-package com.sparta.blog.security;
+package com.sparta.blog.filter;
 
 import com.sparta.blog.entity.User;
 import com.sparta.blog.entity.UserRoleEnum;

@@ -1,7 +1,7 @@
 package com.sparta.blog.controller;
 
-import com.sparta.blog.dto.SignRequestDto;
-import com.sparta.blog.dto.SignResponseDto;
+import com.sparta.blog.dto.sign.SignRequestDto;
+import com.sparta.blog.dto.sign.SignResponseDto;
 import com.sparta.blog.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.ModelAttribute;

@@ -1,4 +1,4 @@
-package com.sparta.blog.dto;
+package com.sparta.blog.dto.sign;
 
 import com.sparta.blog.entity.User;
 import lombok.Getter;

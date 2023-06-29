@@ -1,8 +1,7 @@
 package com.sparta.blog.jwt;
 
 
-import com.sparta.blog.dto.LoginResponseDto;
-import com.sparta.blog.dto.SignResponseDto;
+import com.sparta.blog.dto.login.LoginResponseDto;
 import com.sparta.blog.entity.UserRoleEnum;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -50,7 +49,6 @@ public class JwtUtil {
         key = Keys.hmacShaKeyFor(bytes);
     }
 
-
     // Jwt 토큰 생성
     public String createToken(String username, UserRoleEnum role) {
         Date date = new Date();
@@ -66,8 +64,11 @@ public class JwtUtil {
     }
     //즉 token = 베어리스 + 유저 식별자 값  + 만료시간(현재시간+만료시간) + 발급일 + 키(시크릿키,암호화 알고리즘)
 
-    // JWT Cookie 에 저장
-    public LoginResponseDto addJwtToCookie(String token, HttpServletResponse res) {
+
+
+
+    // JWT Cookie 에 저장 x 헤더에 넣어줄거
+    public void addJwtToCookie(String token, HttpServletResponse res) {
         try {
             token = URLEncoder.encode(token, "utf-8").replaceAll("\\+", "%20"); // Cookie Value 에는 공백이 불가능해서 encoding 진행
             //인코더를 사용해서 공백 제거
@@ -79,7 +80,10 @@ public class JwtUtil {
         } catch (UnsupportedEncodingException e) {
             logger.error(e.getMessage());
         }
-        return new LoginResponseDto("Login Success",200);
+    }
+
+    public LoginResponseDto loginSuccess(){
+        return new LoginResponseDto("Login Suceess",200);
     }
 
     //JWT 토큰 substring
@@ -93,6 +97,9 @@ public class JwtUtil {
         logger.error("Not Found Token");
         throw new NullPointerException("Not Found Token");
     }
+
+
+
 
     // 토큰 검증
     public boolean validateToken(String token) {
@@ -113,11 +120,15 @@ public class JwtUtil {
     }
 
     //검증을 해서 이상이 없다면.
-    //토큰에서 사용자 정보 가져오기
+    //토큰에서 사용자 정보 가져오기 (인증 처리를 위한)
     public Claims getUserInfoFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
         //바디에 있는 claims를 받환 (정보)
     }
+
+
+
+
 
 
     // 필터에서 토큰 가져오는 법
@@ -139,5 +150,16 @@ public class JwtUtil {
         }
         return null;
     }
+
+    ///헤더에서 토큰 가져오는 거
+    public String getJwtFromHeader(HttpServletRequest request) {
+        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
+            return bearerToken.substring(7);
+        }
+        return null;
+    }
+
+
 
 }
