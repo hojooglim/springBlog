@@ -12,5 +12,4 @@ public class BlogRequestDto {
     String postName;
     String contents;
 
-
 }

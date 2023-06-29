@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class UserDetailsImpl implements UserDetails {
 
@@ -17,12 +16,11 @@ public class UserDetailsImpl implements UserDetails {
     public UserDetailsImpl(User user) {
         this.user = user;
     }
+    //UserDetailsServie에서 메서드 오버라이딩을 통해 DB에서 인증된 유저의 정보를 가져온다(그것이 유저 정도 객체 즉, entity)
 
-    //유저 객체를 받아와서.
     public User getUser() {
         return user;
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -36,7 +34,6 @@ public class UserDetailsImpl implements UserDetails {
         return authorities;
     }
 
-    //오버라이딩 해서 디테일들 구현
     @Override
     public String getPassword() {
         return user.getPassword();
@@ -68,4 +65,5 @@ public class UserDetailsImpl implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

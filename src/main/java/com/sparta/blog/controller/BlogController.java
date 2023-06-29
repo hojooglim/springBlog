@@ -2,7 +2,7 @@ package com.sparta.blog.controller;
 
 import com.sparta.blog.dto.blog.BlogRequestDto;
 import com.sparta.blog.dto.blog.BlogResponseDto;
-import com.sparta.blog.dto.login.LoginResponseDto;
+import com.sparta.blog.dto.blog.DeleteResponseDto;
 import com.sparta.blog.filter.UserDetailsImpl;
 import com.sparta.blog.service.BlogService;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,7 @@ public class BlogController {
     }
 
     @DeleteMapping("/blog/{id}")
-    public LoginResponseDto deleteBlog(@PathVariable Long id){
+    public DeleteResponseDto deleteBlog(@PathVariable Long id){
         return blogService.deleteBlog(id);
     }
 }

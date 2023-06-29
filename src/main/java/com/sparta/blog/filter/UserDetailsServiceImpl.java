@@ -1,7 +1,6 @@
 package com.sparta.blog.filter;
 
 import com.sparta.blog.entity.User;
-import com.sparta.blog.filter.UserDetailsImpl;
 import com.sparta.blog.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

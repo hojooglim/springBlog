@@ -2,7 +2,7 @@ package com.sparta.blog.service;
 
 import com.sparta.blog.dto.blog.BlogRequestDto;
 import com.sparta.blog.dto.blog.BlogResponseDto;
-import com.sparta.blog.dto.login.LoginResponseDto;
+import com.sparta.blog.dto.blog.DeleteResponseDto;
 import com.sparta.blog.entity.Blog;
 import com.sparta.blog.entity.User;
 import com.sparta.blog.repository.BlogRepository;
@@ -37,9 +37,9 @@ public class BlogService {
         return new BlogResponseDto(updateBlog);
     }
 
-    public LoginResponseDto deleteBlog(Long id) {
+    public DeleteResponseDto deleteBlog(Long id) {
         blogRepository.delete(checkBlog(id));
-        return new LoginResponseDto("삭제 되었습니다.",200);
+        return new DeleteResponseDto("Delete Success",200);
     }
 
     public Blog checkBlog(Long id){

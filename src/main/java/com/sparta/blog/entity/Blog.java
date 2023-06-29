@@ -42,4 +42,5 @@ public class Blog extends Timestamped {
         this.contents = blogRequestDto.getContents();
         return new Blog();
     }
+
 }

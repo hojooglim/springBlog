@@ -5,23 +5,19 @@ import com.sparta.blog.entity.User;
 import com.sparta.blog.entity.UserRoleEnum;
 import com.sparta.blog.jwt.JwtUtil;
 import com.sparta.blog.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtUtil = jwtUtil;
-
-    }
 
     public void signup(SignRequestDto signRequestDto){
         //회원가입 요청
@@ -48,7 +44,7 @@ public class UserService {
     }
 
 //    public void login(LoginRequestDto loginRequestDto, HttpServletResponse res) {
-//        //로그인 요청  // 이게 노필터 방식
+//        //로그인 요청  // 노필터 방식
 //        //아이디 확인
 //        User user = userRepository.findByUsername(loginRequestDto.getUsername()).orElseThrow(
 //                ()-> new IllegalArgumentException("아이디가 존재하지 않습니다."));

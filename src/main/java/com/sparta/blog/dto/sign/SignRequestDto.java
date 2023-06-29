@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class SignRequestDto {
+
     @NotNull(message = "username은 필수 입니다.")
     @Pattern(regexp = "^[a-z0-9]*$", message = "알파벳 소문자(a~z), 숫자(0~9)만 입력 가능합니다.")
     @Size(min = 4, max = 10, message = "최소 4자 이상, 10자 이하의 숫자를 입력하세요")

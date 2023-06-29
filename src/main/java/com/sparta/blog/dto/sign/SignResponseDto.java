@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class SignResponseDto {
+
     private String msg;
     private int statusCode;
 

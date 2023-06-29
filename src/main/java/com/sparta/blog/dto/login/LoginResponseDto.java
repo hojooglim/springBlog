@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Getter
 public class LoginResponseDto {
+
     private String msg;
     private int statusCode;
 
@@ -14,4 +15,5 @@ public class LoginResponseDto {
         this.msg = msg;
         this.statusCode = statusCode;
     }
+
 }

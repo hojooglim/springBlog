@@ -4,6 +4,7 @@ import com.sparta.blog.dto.sign.SignRequestDto;
 import com.sparta.blog.dto.sign.SignResponseDto;
 import com.sparta.blog.service.UserService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,12 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/users")
+@RequiredArgsConstructor
 public class UserController {
-    private UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    private final UserService userService;
 
     @PostMapping("/signup")
     public SignResponseDto signup(@ModelAttribute @Valid SignRequestDto signRequestDto){

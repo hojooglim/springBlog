@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 public class BlogResponseDto {
+
     Long id;
     String postName;
     String userName;
@@ -21,4 +22,5 @@ public class BlogResponseDto {
         this.contents = blog.getContents();
         this.createdAt = blog.getCreatedAt();
     }
+
 }
