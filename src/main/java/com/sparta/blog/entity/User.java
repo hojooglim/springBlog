@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
@@ -28,6 +31,7 @@ public class User {
     //이넘 타입을 데이터 베이스에 저장할때 사용.
     //이넘의 이름 그대로를 저장
     private UserRoleEnum role;
+
 
     public User(String username, String password, String email, UserRoleEnum role) {
         this.username=username;

@@ -22,10 +22,19 @@ public class Comment {
 
     @Column
     private  String username;
+
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable = false)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "blog_id", nullable = false)
+    private Blog blog;
+
     public Comment(CommentRequestDto requestDto, UserDetailsImpl userDetails) {
         this.Comment = requestDto.getComment();
         this.username = userDetails.getUsername();
-
+        this.user = userDetails.getUser();
     }
 
     public void update(CommentRequestDto requestDto) {

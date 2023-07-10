@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -29,6 +32,9 @@ public class Blog extends Timestamped {
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private  User user;
+
+    @OneToMany(mappedBy = "blog")
+    private List<Comment> commentList = new ArrayList<>();
 
     public Blog(BlogRequestDto blogRequestDto, User user) {
         this.postName = blogRequestDto.getPostName();
