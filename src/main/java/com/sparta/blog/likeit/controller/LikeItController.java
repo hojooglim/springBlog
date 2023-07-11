@@ -1,7 +1,7 @@
-package com.sparta.blog.like.controller;
+package com.sparta.blog.likeit.controller;
 
 
-import com.sparta.blog.like.service.LikeService;
+import com.sparta.blog.likeit.service.LikeItService;
 import com.sparta.blog.security.filter.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class LikeController {
-    private final LikeService likeService;
+public class LikeItController {
+    private final LikeItService likeitService;
 
     @PostMapping("/blogLike/{blog_id}")
     public void blogLike(@PathVariable Long blog_id, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        likeService.blogLike(blog_id,userDetails);
+        likeitService.blogLike(blog_id,userDetails);
     }
 
-//    @PostMapping("/commentLike/{comment_id}")
-//    public void commentLike(@PathVariable Long comment_id,@AuthenticationPrincipal UserDetailsImpl userDetails){
-//
-//    }
+    @PostMapping("/commentLike/{comment_id}")
+    public void commentLike(@PathVariable Long comment_id,@AuthenticationPrincipal UserDetailsImpl userDetails){
+        likeitService.commentLike(comment_id,userDetails);
+    }
 
 }

@@ -1,4 +1,4 @@
-package com.sparta.blog.like.entity;
+package com.sparta.blog.likeit.entity;
 
 import com.sparta.blog.blog.entity.Blog;
 import com.sparta.blog.comment.entity.Comment;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-public class LikeBlog {
+public class LikeIt {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,8 +29,12 @@ public class LikeBlog {
     @JoinColumn(name = "comment_id")
     private Comment comment;
 
-    public LikeBlog(Blog blog, User user) {
+    public LikeIt(Blog blog, User user) {
         this.blog=blog;
+        this.user=user;
+    }
+    public LikeIt(Comment comment, User user) {
+        this.comment=comment;
         this.user=user;
     }
 }

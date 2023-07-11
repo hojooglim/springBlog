@@ -19,7 +19,9 @@ public class BlogResponseDto {
     String userName;
     String contents;
     LocalDateTime createdAt;
+    int LikeItBlogCount;
     private List<CommentResponseDto> commentList;
+
 
     public BlogResponseDto(Blog blog) {
         this.id = blog.getId();
@@ -27,6 +29,7 @@ public class BlogResponseDto {
         this.userName = blog.getUserName();
         this.contents = blog.getContents();
         this.createdAt = blog.getCreatedAt();
+        this.LikeItBlogCount=blog.getLikeItList().size();
         this.commentList = new ArrayList<>();
         for (Comment comment : blog.getCommentList()) {
             CommentResponseDto commentResponseDto = new CommentResponseDto(comment);

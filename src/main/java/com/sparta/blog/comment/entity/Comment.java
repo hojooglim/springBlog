@@ -3,7 +3,7 @@ package com.sparta.blog.comment.entity;
 import com.sparta.blog.blog.entity.Blog;
 import com.sparta.blog.blog.entity.Timestamped;
 import com.sparta.blog.comment.dto.CommentRequestDto;
-import com.sparta.blog.like.entity.LikeBlog;
+import com.sparta.blog.likeit.entity.LikeIt;
 import com.sparta.blog.security.filter.UserDetailsImpl;
 import com.sparta.blog.user.entity.User;
 import jakarta.persistence.*;
@@ -38,7 +38,7 @@ public class Comment extends Timestamped {
     private Blog blog;
 
     @OneToMany(mappedBy = "comment")
-    private List<LikeBlog> likeList = new ArrayList<>();
+    private List<LikeIt> likeItList = new ArrayList<>();
 
     public Comment(CommentRequestDto requestDto, UserDetailsImpl userDetails, Blog blog) {
         this.comment = requestDto.getComment();
