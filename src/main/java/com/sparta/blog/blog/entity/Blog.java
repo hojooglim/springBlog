@@ -2,18 +2,17 @@ package com.sparta.blog.blog.entity;
 
 import com.sparta.blog.blog.dto.BlogRequestDto;
 import com.sparta.blog.comment.entity.Comment;
+import com.sparta.blog.like.entity.LikeBlog;
 import com.sparta.blog.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @Table (name = "blog")
 public class Blog extends Timestamped {
@@ -22,7 +21,7 @@ public class Blog extends Timestamped {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column (name = "postName")
+    @Column (name = "title")
     String title;
 
     @Column (name = "userName")
@@ -37,6 +36,9 @@ public class Blog extends Timestamped {
 
     @OneToMany(mappedBy = "blog")
     private List<Comment> commentList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "blog")
+    private List<LikeBlog> likeList = new ArrayList<>();
 
     public Blog(BlogRequestDto blogRequestDto, User user) {
         this.title = blogRequestDto.getTitle();

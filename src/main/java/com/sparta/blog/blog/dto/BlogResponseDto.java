@@ -8,6 +8,7 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -30,7 +31,9 @@ public class BlogResponseDto {
         for (Comment comment : blog.getCommentList()) {
             CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
             this.commentList.add(commentResponseDto);
+            Collections.reverse(this.commentList);
         }
+
     }
 
 }
