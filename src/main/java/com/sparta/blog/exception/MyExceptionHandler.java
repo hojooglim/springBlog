@@ -23,10 +23,4 @@ public class MyExceptionHandler  {
         ExceptionDto exceptionDto = new ExceptionDto(validationEx.getAllErrors().get(0).getDefaultMessage(),400);
         return new ResponseEntity<>(exceptionDto, HttpStatus.BAD_REQUEST);
     }
-
-    @ExceptionHandler({RuntimeException.class})
-    public ResponseEntity<ExceptionDto> ValHandleException(RuntimeException RunEx){
-        ExceptionDto exceptionDto = new ExceptionDto(RunEx.getMessage(),400);
-        return new ResponseEntity<>(exceptionDto, HttpStatus.BAD_REQUEST);
-    }
 }

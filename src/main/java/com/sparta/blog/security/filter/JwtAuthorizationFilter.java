@@ -1,5 +1,6 @@
 package com.sparta.blog.security.filter;
 
+import com.sparta.blog.security.dto.LoginResponseDto;
 import com.sparta.blog.security.jwt.JwtUtil;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
@@ -37,6 +38,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             //토큰 검증 (key)
             if (!jwtUtil.validateToken(tokenValue)) {
                 log.error("Token Error");
+                LoginResponseDto loginResponseDto = new LoginResponseDto("Not available JWT token",400);
+                res.setStatus(400);
+                res.getOutputStream().println(loginResponseDto.getMsg());
+                res.getOutputStream().println("status Code : "+loginResponseDto.getStatusCode());
                 return;
             }
 

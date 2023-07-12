@@ -51,10 +51,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String username = ((UserDetailsImpl) authResult.getPrincipal()).getUsername();
         UserRoleEnum role = ((UserDetailsImpl) authResult.getPrincipal()).getUser().getRole();
         String token = jwtUtil.createToken(username,role);
-
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER,token);
 
-        LoginResponseDto loginResponseDto = jwtUtil.loginSuccess();
+        LoginResponseDto loginResponseDto = new LoginResponseDto("login success",200);
+        response.setStatus(200);
         response.getOutputStream().println(loginResponseDto.getMsg());
         response.getOutputStream().println("status Code : "+loginResponseDto.getStatusCode());
     }
@@ -62,6 +62,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
         log.info("로그인 실패");
-        response.setStatus(401);
+
+        LoginResponseDto loginResponseDto = new LoginResponseDto("not found user",400);
+        response.setStatus(400);
+        response.getOutputStream().println(loginResponseDto.getMsg());
+        response.getOutputStream().println("status Code : "+loginResponseDto.getStatusCode());
     }
 }

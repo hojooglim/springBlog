@@ -58,9 +58,6 @@ public class JwtUtil {
                         .compact();
     }
 
-    public LoginResponseDto loginSuccess(){
-        return new LoginResponseDto("Login Suceess",200);
-    }
 
     public String getJwtFromHeader(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
