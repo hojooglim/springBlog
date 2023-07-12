@@ -1,8 +1,8 @@
 package com.sparta.blog.exception;
 
-import jakarta.validation.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -18,10 +18,15 @@ public class MyExceptionHandler  {
         ExceptionDto exceptionDto = new ExceptionDto(IllegalEx.getMessage(),400);
         return new ResponseEntity<>(exceptionDto, HttpStatus.BAD_REQUEST);
     }
-    @ExceptionHandler({ValidationException.class})
-    public ResponseEntity<ExceptionDto> ValHandleException(ValidationException validationEx){
-        ExceptionDto exceptionDto = new ExceptionDto(validationEx.getMessage(),400);
+    @ExceptionHandler({MethodArgumentNotValidException.class})
+    public ResponseEntity<ExceptionDto> ValHandleException(MethodArgumentNotValidException validationEx){
+        ExceptionDto exceptionDto = new ExceptionDto(validationEx.getAllErrors().get(0).getDefaultMessage(),400);
         return new ResponseEntity<>(exceptionDto, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler({RuntimeException.class})
+    public ResponseEntity<ExceptionDto> ValHandleException(RuntimeException RunEx){
+        ExceptionDto exceptionDto = new ExceptionDto(RunEx.getMessage(),400);
+        return new ResponseEntity<>(exceptionDto, HttpStatus.BAD_REQUEST);
+    }
 }
