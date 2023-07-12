@@ -21,7 +21,7 @@ public class LikeItService {
 
     public void blogLike(Long blogId, UserDetailsImpl userDetails) {
         Blog blog = blogRepository.findById(blogId).orElseThrow(
-                ()-> new NullPointerException("not found blog")
+                ()-> new NullPointerException("글이 존재하지 않습니다.")
         );
 
         Optional<LikeIt> blogLike = likeItRepository.findByBlogAndUser(blog, userDetails.getUser());
@@ -40,7 +40,7 @@ public class LikeItService {
 
     public void commentLike(Long commentId, UserDetailsImpl userDetails) {
         Comment comment = commentRepository.findById(commentId).orElseThrow(
-                ()-> new NullPointerException("not found blog")
+                ()-> new NullPointerException("댓글이 존재하지 않습니다.")
         );
 
         Optional<LikeIt> commentLike = likeItRepository.findByCommentAndUser(comment, userDetails.getUser());

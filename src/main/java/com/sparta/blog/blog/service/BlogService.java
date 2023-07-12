@@ -33,7 +33,7 @@ public class BlogService {
         if(blog.getId().equals(userDetails.getUser().getId())){
             blog.update(blogRequestDto);
         }else {
-            throw new IllegalArgumentException("권한이 없습니다.");
+            throw new IllegalArgumentException("작성자만 삭제/수정할 수 있습니다.");
         }
         return new BlogResponseDto(blog);
     }
@@ -43,7 +43,7 @@ public class BlogService {
         if(blog.getId().equals(userDetails.getUser().getId())){
             blogRepository.delete(blog);
         }else {
-            throw new IllegalArgumentException("권한이 없습니다.");
+            throw new IllegalArgumentException("작성자만 삭제/수정할 수 있습니다.");
         }
         return new BlogResponseDto(blog);
     }

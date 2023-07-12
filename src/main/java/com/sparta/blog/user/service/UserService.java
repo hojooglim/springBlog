@@ -3,13 +3,10 @@ package com.sparta.blog.user.service;
 import com.sparta.blog.user.dto.SignRequestDto;
 import com.sparta.blog.user.entity.User;
 import com.sparta.blog.user.entity.UserRoleEnum;
-import com.sparta.blog.security.jwt.JwtUtil;
 import com.sparta.blog.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,14 +18,21 @@ public class UserService {
 
     public void signup(SignRequestDto signRequestDto){
 
-        Optional<User> checkUserName = userRepository.findByUsername(signRequestDto.getUsername());
-        if (checkUserName.isPresent()) {
+//        Optional<User> checkUserName = userRepository.findByUsername(signRequestDto.getUsername());
+//        if (checkUserName.isPresent()) {
+//            throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
+//        }
+
+//        Optional<User> checkEmail = userRepository.findByEmail(signRequestDto.getEmail());
+//        if (checkEmail.isPresent()) {
+//            throw new IllegalArgumentException("중복된 Email 입니다.");
+//        }
+
+        if (userRepository.existsByUsername(signRequestDto.getUsername())) {
             throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
         }
 
-
-        Optional<User> checkEmail = userRepository.findByEmail(signRequestDto.getEmail());
-        if (checkEmail.isPresent()) {
+        if(userRepository.existsByEmail(signRequestDto.getEmail())){
             throw new IllegalArgumentException("중복된 Email 입니다.");
         }
 

@@ -10,6 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -29,10 +30,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         log.info("로그인 시도");
-        // HttpServletRequest -> LoginRequestDto (get id,password) -> UsernamePasswordAuthenticationToken (not jwt token)-> Manger -> 인증
-        // -> 인증 완료 -> SecurityContextHolder안에 SecurityContext에 회원 정보(entity) 저장
-        // 회원 정보를 저장한다 -> 매니저를 통해 인증이 완료되면 -> UserDetailsService-> Repository조회 -> data -> UserDetail
-        // {UserDetail->(principal)}이 Holder안에 저장.
         try {
             LoginRequestDto requestDto = new ObjectMapper().readValue(request.getInputStream(), LoginRequestDto.class);
             return getAuthenticationManager().authenticate(
@@ -54,14 +51,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String username = ((UserDetailsImpl) authResult.getPrincipal()).getUsername();
         UserRoleEnum role = ((UserDetailsImpl) authResult.getPrincipal()).getUser().getRole();
-
         String token = jwtUtil.createToken(username,role);
 
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER,token);
 
-        LoginResponseDto loginRequestDto = jwtUtil.loginSuccess();
-        response.getOutputStream().println(loginRequestDto.getMsg());
-        response.getOutputStream().println("status Code : "+loginRequestDto.getStatusCode());
+        LoginResponseDto loginResponseDto = jwtUtil.loginSuccess();
+        response.getOutputStream().println(loginResponseDto.getMsg());
+        response.getOutputStream().println("status Code : "+loginResponseDto.getStatusCode());
     }
 
     @Override

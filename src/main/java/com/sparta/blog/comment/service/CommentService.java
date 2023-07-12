@@ -20,7 +20,7 @@ public class CommentService {
 
     public CommentResponseDto createComment(Long blog_id, CommentRequestDto requestDto, UserDetailsImpl userDetails) {
         Blog blog = blogRepository.findById(blog_id).orElseThrow(
-                ()-> new NullPointerException("not found blog")
+                ()-> new NullPointerException("글이 존재하지 않습니다.")
         );
         return new CommentResponseDto(commentRepository.save(new Comment(requestDto, userDetails, blog)));
     }
@@ -33,19 +33,19 @@ public class CommentService {
         if(comment.getId().equals(userDetails.getUser().getId())){
             comment.update(requestDto);
         }else {
-            throw new IllegalArgumentException("권한이 없습니다.");
+            throw new IllegalArgumentException("작성자만 삭제/수정할 수 있습니다.");
         }
         return new CommentResponseDto(comment);
     }
 
     public CommentResponseDto deleteComment(Long id, UserDetailsImpl userDetails) {
         Comment comment = commentRepository.findById(id).orElseThrow(
-                ()-> new NullPointerException("작성한 댓글이 없습니다.")
+                ()-> new NullPointerException("댓글이 존재하지 않습니다.")
         );
         if(comment.getId().equals(userDetails.getUser().getId())){
             commentRepository.delete(comment);
         }else {
-            throw new IllegalArgumentException("권한이 없습니다.");
+            throw new IllegalArgumentException("작성자만 삭제/수정할 수 있습니다.");
         }
         return new CommentResponseDto(comment);
     }
