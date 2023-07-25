@@ -9,9 +9,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface LikeItRepository extends JpaRepository<LikeIt, Long> {
+
     Optional<LikeIt> findByBlogAndUser(Blog blog, User user);
 
     Optional<LikeIt> findByCommentAndUser(Comment comment, User user);
-
 
 }

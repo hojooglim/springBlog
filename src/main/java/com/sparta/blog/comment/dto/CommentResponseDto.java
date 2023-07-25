@@ -6,8 +6,8 @@ import lombok.Getter;
 @Getter
 public class CommentResponseDto {
 
-    private String comment;
-    private int LikeItCommentCount;
+    private final String comment;
+    private final int LikeItCommentCount;
 
     public CommentResponseDto(Comment comment) {
         this.comment=comment.getComment();

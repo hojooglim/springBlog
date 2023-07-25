@@ -14,13 +14,13 @@ import java.util.List;
 @Getter
 public class BlogResponseDto {
 
-    Long id;
-    String title;
-    String userName;
-    String contents;
-    LocalDateTime createdAt;
-    int LikeItBlogCount;
-    private List<CommentResponseDto> commentList;
+    private final Long id;
+    private final String title;
+    private final String userName;
+    private final String contents;
+    private final LocalDateTime createdAt;
+    private final int LikeItBlogCount;
+    private final List<CommentResponseDto> commentList;
 
 
     public BlogResponseDto(Blog blog) {

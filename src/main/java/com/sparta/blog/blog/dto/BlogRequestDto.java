@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class BlogRequestDto {
-    String title;
-    String contents;
+    private String title;
+    private String contents;
 
 }

@@ -16,7 +16,7 @@ public class SignRequestDto {
     private String username;
 
     @NotNull(message = "password 필수 입니다.")
-    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "password는 알파벳 대소문자(a~z, A~Z), 숫자(0~9)만 입력 가능합니다.")
+    @Pattern(regexp = "^[a-zA-Z0-9!@#$%^&*()]*$", message = "password는 알파벳 대소문자(a~z, A~Z), 숫자(0~9)만 입력 가능합니다.")
     @Size(min=7,max=16)
     private String password;
 

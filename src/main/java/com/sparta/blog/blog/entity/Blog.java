@@ -14,31 +14,30 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table (name = "blog")
 public class Blog extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column (name = "title")
+    @Column
     String title;
 
-    @Column (name = "userName")
+    @Column
     String userName;
 
-    @Column (name = "contents", length = 1000)
+    @Column (length = 1000)
     String contents;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @OneToMany(mappedBy = "blog")
-    private List<Comment> commentList = new ArrayList<>();
+    private final List<Comment> commentList = new ArrayList<>();
 
     @OneToMany(mappedBy = "blog")
-    private List<LikeIt> likeItList = new ArrayList<>();
+    private final List<LikeIt> likeItList = new ArrayList<>();
 
     public Blog(BlogRequestDto blogRequestDto, User user) {
         this.title = blogRequestDto.getTitle();
