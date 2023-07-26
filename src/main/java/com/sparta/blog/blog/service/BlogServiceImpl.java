@@ -4,6 +4,7 @@ import com.sparta.blog.blog.dto.BlogRequestDto;
 import com.sparta.blog.blog.dto.BlogResponseDto;
 import com.sparta.blog.blog.entity.Blog;
 import com.sparta.blog.blog.repository.BlogRepository;
+import com.sparta.blog.exception.AuthUserException;
 import com.sparta.blog.security.filter.UserDetailsImpl;
 
 import lombok.RequiredArgsConstructor;
@@ -42,7 +43,7 @@ public class BlogServiceImpl implements BlogService{
         if(authUser(blog, userDetails)){
             blog.update(blogRequestDto);
         }else {
-            throw new IllegalArgumentException("작성자만 삭제/수정할 수 있습니다.");
+            throw new AuthUserException("작성자만 삭제/수정할 수 있습니다.");
         }
         return new BlogResponseDto(blog);
     }
@@ -54,7 +55,7 @@ public class BlogServiceImpl implements BlogService{
         if(authUser(blog, userDetails)){
             blogRepository.delete(blog);
         } else {
-            throw new IllegalArgumentException("작성자만 삭제/수정할 수 있습니다.");
+            throw new AuthUserException("작성자만 삭제/수정할 수 있습니다.");
         }
     }
 

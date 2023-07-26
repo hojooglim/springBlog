@@ -5,6 +5,7 @@ import com.sparta.blog.comment.dto.CommentRequestDto;
 import com.sparta.blog.comment.dto.CommentResponseDto;
 import com.sparta.blog.comment.entity.Comment;
 import com.sparta.blog.comment.repository.CommentRepository;
+import com.sparta.blog.exception.AuthUserException;
 import com.sparta.blog.security.filter.UserDetailsImpl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class CommentServiceImpl implements CommentService{
         if(blogService.authUser(comment.getBlog(),userDetails)){
             comment.update(requestDto);
         }else {
-            throw new IllegalArgumentException("작성자만 삭제/수정할 수 있습니다.");
+            throw new AuthUserException("작성자만 삭제/수정할 수 있습니다.");
         }
         return new CommentResponseDto(comment);
     }
@@ -41,7 +42,7 @@ public class CommentServiceImpl implements CommentService{
         if(blogService.authUser(comment.getBlog(),userDetails)){
             commentRepository.delete(comment);
         }else {
-            throw new IllegalArgumentException("작성자만 삭제/수정할 수 있습니다.");
+            throw new AuthUserException("작성자만 삭제/수정할 수 있습니다.");
         }
     }
 

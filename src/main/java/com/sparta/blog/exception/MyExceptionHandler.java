@@ -20,4 +20,8 @@ public class MyExceptionHandler  {
     public ResponseEntity<String> ValHandleException(MethodArgumentNotValidException validationEx){
         return new ResponseEntity<>(validationEx.getAllErrors().get(0).getDefaultMessage(), HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler({AuthUserException.class})
+    public ResponseEntity<String> AuthUserException(AuthUserException AuthEx){
+        return new ResponseEntity<>(AuthEx.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }
